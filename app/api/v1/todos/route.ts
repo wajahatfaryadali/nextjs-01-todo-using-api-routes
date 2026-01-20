@@ -10,10 +10,7 @@ export const GET = async (req: NextRequest) => {
     return NextResponse.json({ status: 200, data: todos });
   } catch (error) {
     console.log("error getting all todos ******** ", error);
-    return NextResponse.json(
-      { error: "Failed to fetch todos" },
-      { status: 500 },
-    );
+    return NextResponse.json({ status: 500, message: "Internal Server Error" });
   }
 };
 export const POST = (req: NextRequest) => {};
