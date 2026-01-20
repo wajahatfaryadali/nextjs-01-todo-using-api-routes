@@ -15,10 +15,12 @@ datasource db {
 
 model Todo {
   id String @id @default(cuid())
-  title String 
+  title String @db.VarChar(30)
   details String @db.VarChar(200)
   isCompleted Boolean @default(false)
   deadline DateTime?
+  isDeleted Boolean @default(false)
+  deletedAt DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
