@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 // @ts-expect-error: CSS module import
 import "./globals.css";
+import QueryProvider from "@/lib/react-query";
 
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-
 });
 
 export const metadata: Metadata = {
@@ -22,10 +22,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${roboto.variable} antialiased`}
-      >
-        {children}
+      <body className={`${roboto.variable} antialiased`}>
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );
