@@ -14,13 +14,41 @@ datasource db {
 }
 
 model Todo {
-  id String @id @default(cuid())
-  title String @db.VarChar(30)
-  details String @db.VarChar(200)
-  isCompleted Boolean @default(false)
-  deadline DateTime?
-  isDeleted Boolean @default(false)
-  deletedAt DateTime?
+  id          String    @id @default(cuid())
+  title       String    @db.VarChar(30)
+  details     String    @db.VarChar(200)
+  isCompleted Boolean   @default(false)
+  deadline    DateTime?
+  userID      String
+  user        User      @relation(fields: [userID], references: [id], onDelete: Cascade)
+
+  // isDeleted   Boolean   @default(false)
+  // deletedAt   DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Ensures that each user cannot have multiple todos with the same title
+  @@unique([title, userID])
+}
+
+enum UserRoleEnum {
+  ADMIN       @map("admin")
+  USER        @map("user")
+  SUPER_ADMIN @map("super_admin")
+}
+
+model User {
+  id         String       @id @default(cuid())
+  name       String
+  identifier String       @unique()
+  password   String       @db.VarChar(50)
+  isActive   Boolean      @default(true)
+  role       UserRoleEnum @default(USER)
+  imageURL   String?      @db.VarChar(200)
+
+  todos     Todo[]
+  // isDeleted Boolean   @default(false)
+  // deletedAt DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
