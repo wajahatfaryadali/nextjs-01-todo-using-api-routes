@@ -57,7 +57,8 @@ export const UsersValidatorSchema = z.object({
     .default(UserRoleEnum.USER),
   imageURL: z
     .string("imageURL cannot be empty")
-    .max(100, "url cannot be empty"),
+    .max(100, "url cannot be empty")
+    .optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
 });

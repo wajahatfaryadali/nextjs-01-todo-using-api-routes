@@ -25,6 +25,6 @@ export const errorRes = ({
   success = false,
   error,
 }: ErrorResOptionsType) => {
-  console.log("error ************* ", error);
+//   console.log("error ************* ", error);
   return { success, message, code };
 };
