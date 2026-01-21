@@ -1,3 +1,4 @@
+import { UserRoleEnum } from "@/types/enum";
 import { z } from "zod";
 
 export const TodosValidatorSchema = z.object({
@@ -13,8 +14,8 @@ export const TodosValidatorSchema = z.object({
     .optional(),
   isCompleted: z.boolean({ error: "isCompleted must be a boolean value" }),
   deadline: z.date().optional(),
-  isDeleted: z.boolean().optional(),
-  deletedAt: z.date().optional(),
+  // isDeleted: z.boolean().optional(),
+  // deletedAt: z.date().optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
 });
@@ -34,4 +35,47 @@ export const TodosPostValidatorSchema = TodosValidatorSchema.pick({
   details: true,
   isCompleted: true,
   deadline: true,
+});
+
+// user schemas
+
+export const UsersValidatorSchema = z.object({
+  id: z.cuid(),
+  name: z
+    .string()
+    .min(3, "name cannot be less than 3 characters")
+    .max(100, "name cannot be more than 100 characters"),
+  identifier: z.email(),
+  password: z
+    .string()
+    .min(6, "minimum 6 charaters req for password")
+    .max(50, "max 50 characters allowed in password field"),
+  isActive: z.boolean().optional().default(false),
+  role: z
+    .enum(["user", "admin"], { error: "role can be admin or user" })
+    .optional()
+    .default(UserRoleEnum.USER),
+  imageURL: z
+    .string("imageURL cannot be empty")
+    .max(100, "url cannot be empty"),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+});
+
+export const UserPostValidatorSchema = UsersValidatorSchema.pick({
+  name: true,
+  identifier: true,
+  password: true,
+  isActive: true,
+  role: true,
+  imageURL: true,
+});
+
+export const UsersResponseValidatorSchema = UsersValidatorSchema.pick({
+  id: true,
+  name: true,
+  identifier: true,
+  isActive: true,
+  role: true,
+  imageURL: true,
 });
