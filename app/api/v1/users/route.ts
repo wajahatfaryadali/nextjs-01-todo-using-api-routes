@@ -1,11 +1,7 @@
 import prisma from "@/db/prisma";
-import { errorRes, successRes } from "@/lib/helpers/api-helpers";
-import {
-  UserPostValidatorSchema,
-  UsersValidatorSchema,
-} from "@/lib/zod-validators";
+import { UserPostValidatorSchema } from "@/lib/zod-validators";
 import { NextRequest, NextResponse } from "next/server";
-import z, { success } from "zod";
+import z from "zod";
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -37,7 +33,6 @@ export const POST = async (req: NextRequest) => {
     const isUserExist = await prisma.user.findUnique({
       where: { identifier: validaedData.identifier },
     });
-    console.log("checking if user exist ********* ", isUserExist);
 
     if (isUserExist) {
       return NextResponse.json(

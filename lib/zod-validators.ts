@@ -80,3 +80,6 @@ export const UsersResponseValidatorSchema = UsersValidatorSchema.pick({
   role: true,
   imageURL: true,
 });
+
+
+// auth validator
