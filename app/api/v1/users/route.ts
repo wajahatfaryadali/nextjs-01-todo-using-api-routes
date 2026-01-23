@@ -5,14 +5,25 @@ import {
   UsersValidatorSchema,
 } from "@/lib/zod-validators";
 import { NextRequest, NextResponse } from "next/server";
-import z from "zod";
+import z, { success } from "zod";
 
 export const GET = async (req: NextRequest) => {
   try {
     const allUsers = await prisma.user.findMany({});
-    // return NextResponse.json();
+    return NextResponse.json(
+      { data: allUsers, message: "all users", success: true },
+      { status: 200 },
+    );
   } catch (error) {
-    // return NextResponse.json();
+    console.log("error getting all users ******* ", error);
+    return NextResponse.json(
+      {
+        error: "Internal Server Error",
+        message: "Internal Server Error",
+        success: false,
+      },
+      { status: 500 },
+    );
   }
 };
 
@@ -26,7 +37,7 @@ export const POST = async (req: NextRequest) => {
     const isUserExist = await prisma.user.findUnique({
       where: { identifier: validaedData.identifier },
     });
-    console.log('checking if user exist ********* ', isUserExist)
+    console.log("checking if user exist ********* ", isUserExist);
 
     if (isUserExist) {
       return NextResponse.json(
