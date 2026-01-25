@@ -8,6 +8,15 @@ export const GET = async (
   try {
     const { id } = await params;
 
+    if (!id) {
+      return NextResponse.json(
+        {
+          error: "ID should be valid user id",
+          message: "user id is required",
+          success: false,
+          data: null
+        }, { status: 400 })
+    }
     const user = await prisma.user.findUnique({
       where: { id: id },
       omit: {

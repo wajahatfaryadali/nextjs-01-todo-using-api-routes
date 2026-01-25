@@ -1,14 +1,14 @@
-import { UserRoleEnum } from "@/types/enum";
+import { UserRoleEnum } from "@/app/generated/prisma/enums";
 import { z } from "zod";
 
 export const TodosValidatorSchema = z.object({
   id: z.cuid(),
   title: z
-    .string()
+    .string("title cannot be empty")
     .min(3, "minimum 3 characters required for title!")
     .max(30, "title length should be less than 30"),
   details: z
-    .string()
+    .string("details cannot be empty")
     .min(3, "minimum 3 characters required for description!")
     .max(500, "details length should be less than 200")
     .optional(),
@@ -42,12 +42,12 @@ export const TodosPostValidatorSchema = TodosValidatorSchema.pick({
 export const UsersValidatorSchema = z.object({
   id: z.cuid(),
   name: z
-    .string()
+    .string("name is required")
     .min(3, "name cannot be less than 3 characters")
     .max(100, "name cannot be more than 100 characters"),
-  identifier: z.email(),
+  identifier: z.email("email is required"),
   password: z
-    .string()
+    .string("password is required")
     .min(6, "minimum 6 charaters req for password")
     .max(50, "max 50 characters allowed in password field"),
   isActive: z.boolean().optional().default(false),
@@ -83,3 +83,8 @@ export const UsersResponseValidatorSchema = UsersValidatorSchema.pick({
 
 
 // auth validator
+
+export const RegisterResponseValidatorSchema = UsersValidatorSchema.pick({
+  identifier: true,
+  password: true,
+});

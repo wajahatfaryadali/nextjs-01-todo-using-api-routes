@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-// @ts-expect-error: CSS module import
 import "./globals.css";
 import QueryProvider from "@/lib/react-query";
 
