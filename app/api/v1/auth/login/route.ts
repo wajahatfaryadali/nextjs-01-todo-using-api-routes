@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async (req: NextRequest) => {
   try {
     const data = req.body;
-    
+    console.log('chekcing here********* ', data)
 
-    NextResponse.json(
+    return NextResponse.json(
       { data: data, message: "login success", success: true },
       { status: 200 },
     );

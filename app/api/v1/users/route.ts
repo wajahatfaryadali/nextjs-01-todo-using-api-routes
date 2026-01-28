@@ -5,7 +5,7 @@ import z from "zod";
 
 export const GET = async (req: NextRequest) => {
   try {
-    const allUsers = await prisma.user.findMany({});
+    const allUsers = await prisma.user.findMany({ omit: { password: true } });
     return NextResponse.json(
       { data: allUsers, message: "all users", success: true },
       { status: 200 },

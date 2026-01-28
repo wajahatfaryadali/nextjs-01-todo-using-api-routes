@@ -41,7 +41,7 @@ model User {
   id         String       @id @default(cuid())
   name       String
   identifier String       @unique()
-  password   String       @db.VarChar(50)
+  password   String       @db.VarChar(100)
   isActive   Boolean      @default(true)
   role       UserRoleEnum @default(USER)
   imageURL   String?      @db.VarChar(200)
