@@ -1,5 +1,5 @@
 import prisma from "@/db/prisma";
-import { UserPostValidatorSchema } from "@/lib/zod-validators";
+import { CreateUserValidatorSchema } from "@/lib/zod-validators";
 import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
 
@@ -28,7 +28,7 @@ export const POST = async (req: NextRequest) => {
   try {
     const data = await req.json();
 
-    const validaedData = UserPostValidatorSchema.parse(data);
+    const validaedData = CreateUserValidatorSchema.parse(data);
 
     const isUserExist = await prisma.user.findUnique({
       where: { identifier: validaedData.identifier },

@@ -1,6 +1,6 @@
 import prisma from "@/db/prisma";
 import { isUserExistByIdentifier } from "@/lib/api/services/api-query-helper";
-import { RegisterResponseValidatorSchema } from "@/lib/zod-validators";
+import { RegisterPayloadValidatorSchema } from "@/lib/zod-validators";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import z from "zod";
@@ -9,7 +9,7 @@ export const POST = async (req: NextRequest) => {
   try {
     const data = await req.json();
 
-    const validatedData = RegisterResponseValidatorSchema.parse(data);
+    const validatedData = RegisterPayloadValidatorSchema.parse(data);
 
     if (await isUserExistByIdentifier(validatedData.identifier)) {
       return NextResponse.json(

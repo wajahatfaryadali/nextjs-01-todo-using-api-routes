@@ -63,7 +63,7 @@ export const UsersValidatorSchema = z.object({
   updatedAt: z.date().optional(),
 });
 
-export const UserPostValidatorSchema = UsersValidatorSchema.pick({
+export const CreateUserValidatorSchema = UsersValidatorSchema.pick({
   name: true,
   identifier: true,
   password: true,
@@ -84,7 +84,12 @@ export const UsersResponseValidatorSchema = UsersValidatorSchema.pick({
 
 // auth validator
 
-export const RegisterResponseValidatorSchema = UsersValidatorSchema.pick({
+export const RegisterPayloadValidatorSchema = UsersValidatorSchema.pick({
+  identifier: true,
+  password: true,
+});
+
+export const LoginPayloadValidatorSchema = UsersValidatorSchema.pick({
   identifier: true,
   password: true,
 });
